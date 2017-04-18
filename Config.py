@@ -23,7 +23,7 @@
 # OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 class Config:
 
     #########################################################################
@@ -35,7 +35,9 @@ class Config:
     # Если нет файла, то его нужно создать с помощью load_data.ipynb
 
     DATA_FRAME = '[\'RTS-12.15\']'
-
+    #use Sharpe ratio changing as reward. Return will be using owervise
+    SHARPE = True
+    # 
     DATA_DEPTH = 6
     # Enable to see the trained agent in action
     PLAY_MODE = False
@@ -148,3 +150,6 @@ class Config:
     MIN_POLICY = 0.0
     # Use log_softmax() instead of log(softmax())
     USE_LOG_SOFTMAX = False
+
+
+

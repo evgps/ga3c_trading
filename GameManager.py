@@ -43,7 +43,10 @@ class environment:
         self.same_steps = 0
         self.prev_act = 0
         self.action_space_n = 3
-    
+        self.mean = 0
+        self.dev = 0
+        self.prev_sharpe = 0
+
     def calc_reward(self, act):
         # Действие act is -1(sell) 0 (nothing) and +1(buy)
         #if(act != self.n_shares
@@ -56,6 +59,22 @@ class environment:
         reward = self.equity - self.prev_equity
         self.prev_equity = self.equity
         #Магические константы - штраф равен 0.01% за ход на 10 одинаковых действий
+        if Config.SHARPE:
+            n = self.iter + 1 
+            if n = 1:
+                self.mean = 0
+                self.dev = 0
+                self.prev_sharpe = 0
+            A = float(n)/(n+1)
+            new_mean = self.mean*A + self.equity/(n+1)
+            delta = (new_mean-self.mean)**2
+            new_dev = A*(self.dev + delta) + ((self.equity-new_mean)**2)/(n+1)
+            self.shape = new_mean/np.sqrt(new_dev)
+            if n<5:
+                #Для СТАБИЛЬНОСТИ сначала копим данные
+                self.sharpe = 0
+            reward = self.sharpe - self.prev_sharpe 
+            self.prev_sharpe = self.sharpe
         return reward - self.comission*(self.same_steps/1000)
     
     def step(self, act):
